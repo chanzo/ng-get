@@ -1,5 +1,22 @@
 # ng-get
 
+[![NPM version][npm-image]][npm-url]
+[![GitHub last commit][github-last-commit]](#)
+[![Downloads][downloads-image]][npm-url]
+[![Dependency status][david-dm-image]][david-dm-url]
+[![Dev Dependency status][david-dm-dev-image]][david-dm-dev-url]
+[![License][license-image]](/LICENSE)
+
+[npm-url]: https://npmjs.org/package/ng-get
+[npm-image]: https://img.shields.io/npm/v/ng-get.svg
+[downloads-image]: https://img.shields.io/npm/dm/ng-get.svg
+[github-last-commit]: https://img.shields.io/github/last-commit/chanzo/ng-get.svg?maxAge=2400
+[david-dm-url]: https://david-dm.org/chanzo/ng-get
+[david-dm-image]: https://img.shields.io/david/chanzo/ng-get.svg
+[david-dm-dev-url]: https://david-dm.org/chanzo/ng-get?type=dev
+[david-dm-dev-image]: https://img.shields.io/david/dev/chanzo/ng-get.svg
+[license-image]: https://img.shields.io/npm/l/ng-get.svg
+
 Get the environment files of a publish Angular app.
 
 ### Example command
