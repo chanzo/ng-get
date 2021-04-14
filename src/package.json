@@ -1,6 +1,6 @@
 {
   "name": "ng-get",
-  "version": "0.0.1",
+  "version": "0.0.0-alpha.0",
   "description": "Get the environment files of a publish Angular app.",
   "main": "ng-get.js",
   "keywords": [
@@ -10,6 +10,10 @@
   ],
   "bin": {
     "ng-get": "bin/ng-get.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:chanzo/ng-get.git"
   },
   "author": "Chanzo Wazi",
   "license": "MIT",
