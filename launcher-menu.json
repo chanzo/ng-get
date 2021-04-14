@@ -1,0 +1,20 @@
+{
+  "menu": {
+    "description": "action",
+    "build:Build node package.": [
+      "build"
+    ],
+    "tools": {
+      "Code style": {
+        "check:Check files": [
+          "lint:check || true",
+          "pretty:check || true"
+        ],
+        "write:Update files": [
+          "lint:write",
+          "pretty:write"
+        ]
+      }
+    }
+  }
+}
