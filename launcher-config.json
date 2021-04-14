@@ -13,7 +13,6 @@
         "cpx src/README.md dist/package",
         "cpx src/LICENSE dist/package",
         "cpx src/bin/ng-get.js        dist/package/bin",
-        "cpx 'src/templates/**/*' dist/package/templates",
         "echo Done..."
       ],
       "sequential-else": [
