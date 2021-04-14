@@ -1,0 +1,51 @@
+{
+  "scripts": {
+    "build": {
+      "condition": [
+        "require('./src/package.json').version==='$npm_package_version'"
+      ],
+      "sequential-then": [
+        "lint:check",
+        "echo ${launch_style_bold}Building node package version:$launch_style_dim $npm_package_version$launch_style_normal",
+        "rimraf ./dist/package",
+        "tsc --build src",
+        "cpx src/package.json dist/package",
+        "cpx src/README.md dist/package",
+        "cpx src/LICENSE dist/package",
+        "cpx src/bin/ng-get.js        dist/package/bin",
+        "cpx 'src/templates/**/*' dist/package/templates",
+        "echo Done..."
+      ],
+      "sequential-else": [
+        "echo ${launch_style_bold}Version number in ./src/package.json should be equal to:$launch_style_dim $npm_package_version$launch_style_normal",
+        "exit 1"
+      ]
+    },
+    "postinstall": [
+      "husky install",
+      "debug",
+      "npm install"
+    ],
+    "lint:check": [
+      "echo Linting sources files...",
+      "tslint --project src $*",
+      "echo No lint errors found...",
+      ""
+    ],
+    "lint:write": "lint:check --fix",
+    "pretty:check": [
+      "prettier --check ."
+    ],
+    "pretty:write": [
+      "echo Update formatting...",
+      "prettier --write ."
+    ],
+    "pre:commit": [
+      "pretty:check",
+      "lint:check"
+    ]
+  },
+  "options": {
+    "logLevel": 0
+  }
+}

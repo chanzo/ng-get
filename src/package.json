@@ -1,0 +1,19 @@
+{
+  "name": "ng-get",
+  "version": "0.0.1",
+  "description": "Get the environment files of a publish Angular app.",
+  "main": "ng-get.js",
+  "keywords": [
+    "shell",
+    "environment",
+    "cli"
+  ],
+  "bin": {
+    "ng-get": "bin/ng-get.js"
+  },
+  "author": "Chanzo Wazi",
+  "license": "MIT",
+  "dependencies": {
+    "htmlparser2": "^6.1.0"
+  }
+}

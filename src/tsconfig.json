@@ -1,0 +1,9 @@
+{
+  "extends": "../tsconfig.json",
+  "include": [
+    "ng-get.ts"
+  ],
+  "compilerOptions": {
+    "outDir": "../dist/package" /* Redirect output structure to the directory. */
+  }
+}
