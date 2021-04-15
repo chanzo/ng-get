@@ -14,8 +14,8 @@ interface IIndex {
 class NGInspect {
   public readonly ngVersion: string;
   public environment: any;
-  public static async parseIndex(uri: string): Promise<IIndex> {
-    const content = await wget(uri);
+  public static async parseIndex(url: URL): Promise<IIndex> {
+    const content = await wget(url.href);
     const scripts: string[] = [];
     const parser = new Parser({
       onopentag: (name, attributes) => {
@@ -39,9 +39,10 @@ class NGInspect {
     };
   }
 
-  public static async parse(uri: string): Promise<NGInspect> {
-    const index = await NGInspect.parseIndex(uri);
-    const main = index.main ? (await wget(uri + '/' + index.main)).toString() : '';
+  public static async parse(url: URL): Promise<NGInspect> {
+    const index = await NGInspect.parseIndex(url);
+    const main = await NGInspect.getMain(url, index.main);
+
     // const main = fs.readFileSync('../main-dump-min.js').toString();
     const ngi = new NGInspect(index, main);
 
@@ -49,15 +50,34 @@ class NGInspect {
   }
 
   private constructor(public readonly index: IIndex, main: string) {
-    const node = acorn.parse(main, { ecmaVersion: 2020 });
+    try {
+      const node = acorn.parse(main, { ecmaVersion: 2020 });
 
-    // fs.writeFileSync('acorn.json', JSON.stringify(node, null, 2));
-    // fs.writeFileSync('../main-dump-min.js');
+      // fs.writeFileSync('acorn.json', JSON.stringify(node, null, 2));
+      // fs.writeFileSync('../main-dump-min.js');
 
-    const parser = new AngularV9(node);
+      const parser = new AngularV9(node);
 
-    this.ngVersion = parser.getVersion();
-    this.environment = parser.getEnvironment();
+      this.ngVersion = parser.getVersion();
+      this.environment = parser.getEnvironment();
+    } catch (error) {
+      this.ngVersion = '';
+      this.environment = {};
+    }
+  }
+
+  private static async getMain(url: URL, main: string): Promise<string> {
+    if (main) {
+      try {
+        console.log('Downloading main:', url.href + main);
+
+        return (await wget(url.href + main)).toString();
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    return '';
   }
 }
 
@@ -67,9 +87,15 @@ export async function main(argv: string[]): Promise<void> {
     process.exit(1);
   }
 
-  const url = argv[2];
+  let location = argv[2].toLowerCase();
 
-  console.log('Inspecting:', url);
+  if (!location.startsWith('http')) {
+    location = 'https://' + location;
+  }
+
+  const url = new URL(location);
+
+  console.log('Inspecting:', url.href);
   console.log();
 
   const result = await NGInspect.parse(url);

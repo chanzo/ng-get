@@ -13,6 +13,9 @@ export async function wget(url: string): Promise<Buffer> {
         })
         .on('end', () => {
           resolve(Buffer.concat(bodyChunks));
+        })
+        .on('error', error => {
+          reject(error);
         });
     });
   });

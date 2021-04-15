@@ -1,5 +1,12 @@
 # Change Log
 
+## 1.0.0-beta.0
+
+### Changes
+
+- Updated argument processing
+- Updated `README.md`
+
 ## 0.0.0-alpha.2
 
 ### Changes

@@ -20,27 +20,39 @@
 
 # ![Logo](docs/readme-logo.png) ng-get sources
 
-Get the environment files of a publish Angular app.
+This repository contains the Typescript source code of `ng-get`. The sources are located in the **src** directory.
+This readme describes how to build and deploy `ng-get` it self. For the npm package documentation open
+the [readme](src/README.md) located in the **src** directory.
 
-### Example command
+### Tools
+
+- [node](https://nodejs.org/en/) - JavaScript runtime
+- [nvm](https://github.com/creationix/nvm) - node version manager
+- [tsc](https://www.typescriptlang.org/) - TypeScript
+- [launch](https://www.npmjs.com/package/script-launcher) - Script Launcher
+
+### Basic setup
 
 ```bash
-npx ng-get https://my-angular-website.com
+git clone git@github.com:chanzo/ng-get.git
+cd ng-get
+
+npm install
+npm start
 ```
 
-<details>
-  <summary><strong>Output:</strong></summary>
+### Build & Publish
 
-```text
-[
-  'runtime-es2015.df79926e5071dff72236.js',
-  'runtime-es5.df79926e5071dff72236.js',
-  'polyfills-es5.45b23e47196826e202d2.js',
-  'polyfills-es2015.8518fc4b12e406366c85.js',
-  'main-es2015.1021e6b3443d65605e3b.js',
-  'main-es5.1021e6b3443d65605e3b.js'
-]
+```bash
+npm start build
+cd dist/package
+npm login
+npm whoami
+npm publish
 ```
 
-</details>
-&nbsp;
+### Dependencies
+
+- [acorn](https://github.com/acornjs/acorn) - A small, fast, JavaScript-based JavaScript parser
+- [acorn-walk](https://github.com/acornjs/acorn/tree/master/acorn-walk) - An abstract syntax tree walker for the ESTree format
+- [htmlparser2](https://github.com/fb55/htmlparser2) - Forgiving HTML and XML parser
