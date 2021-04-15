@@ -11,7 +11,7 @@ export class AngularV9 extends Angular {
       this.node,
       {
         type: 'VariableDeclaration',
-        kind: 'const',
+        kind: /^const|var$/,
         declarations: new MatchFirstArray([
           {
             type: 'VariableDeclarator',
@@ -51,6 +51,7 @@ export class AngularV9 extends Angular {
       this.node,
       {
         type: 'VariableDeclaration',
+        kind: /^const|var$/,
         declarations: [
           {
             type: 'VariableDeclarator',
@@ -59,7 +60,7 @@ export class AngularV9 extends Angular {
             },
             init: {
               type: 'ObjectExpression',
-              properties: new MatchArray(
+              properties: new MatchFirstArray(
                 [
                   {
                     type: 'Property',
@@ -76,8 +77,8 @@ export class AngularV9 extends Angular {
                       prefix: true,
                       argument: {
                         type: 'Literal',
-                        value: 0,
-                        raw: '0'
+                        // value: 0,
+                        raw: /^0|1$/
                       }
                     },
                     kind: 'init'
@@ -87,8 +88,7 @@ export class AngularV9 extends Angular {
               )
             }
           }
-        ],
-        kind: 'const'
+        ]
       },
       0, // 258527
       1
@@ -97,13 +97,7 @@ export class AngularV9 extends Angular {
     if (found.length > 0) {
       const match = found[0] as any;
 
-      // return match.declarations[0].init.properties;
       return this.convert(match.declarations[0].init.properties);
-
-      // return match.declarations[0].init.properties.map((item: any) => ({
-      //   key: item.key.name,
-      //   value: item.value.value
-      // }));
     }
 
     return [];

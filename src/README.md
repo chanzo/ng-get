@@ -19,7 +19,7 @@
 
 Get the environment files of a publish Angular app.
 
-This version is still really experimental and works only in some cases.
+This version is still really experimental but it should work for the Angular versions v9, v10 and v11
 
 ### Example command
 

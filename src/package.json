@@ -1,6 +1,6 @@
 {
   "name": "ng-get",
-  "version": "0.0.0-alpha.2",
+  "version": "1.0.0-beta.0",
   "description": "Get the environment files of a publish Angular app.",
   "main": "ng-get.js",
   "keywords": [
