@@ -5,6 +5,7 @@
 ### Changes
 
 - Updated argument processing
+- Updated passing selections
 - Updated `README.md`
 
 ## 0.0.0-alpha.2

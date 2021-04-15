@@ -104,6 +104,15 @@ export function nodeMatch(node: any, match: any): boolean {
       }
 
       if (matchCount === match.items.length) {
+        const backup = [];
+
+        for (let index = nodeIndex; index < node.length; index++) {
+          backup.push(node[index]);
+        }
+
+        node.length = 0;
+        node.push(...backup);
+
         return true;
       }
     }
