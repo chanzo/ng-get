@@ -49,46 +49,67 @@ export class AngularV9 extends Angular {
   public getEnvironment(): any {
     const found = acornSelect(
       this.node,
+
       {
-        type: 'VariableDeclaration',
-        kind: /^const|var$/,
-        declarations: [
+        type: 'FunctionExpression',
+        id: null,
+        expression: false,
+        generator: false,
+        async: false,
+        params: [
           {
-            type: 'VariableDeclarator',
-            id: {
-              type: 'Identifier'
-            },
-            init: {
-              type: 'ObjectExpression',
-              properties: new MatchFirstArray(
-                [
-                  {
-                    type: 'Property',
-                    method: false,
-                    shorthand: false,
-                    computed: false,
-                    key: {
-                      type: 'Identifier',
-                      name: 'production'
-                    },
-                    value: {
-                      type: 'UnaryExpression',
-                      operator: '!',
-                      prefix: true,
-                      argument: {
-                        type: 'Literal',
-                        // value: 0,
-                        raw: /^0|1$/
-                      }
-                    },
-                    kind: 'init'
-                  }
-                ],
-                1
-              )
-            }
+            type: 'Identifier'
+          },
+          {
+            type: 'Identifier'
+          },
+          {
+            type: 'Identifier'
           }
-        ]
+        ],
+        body: {
+          type: 'BlockStatement',
+          body: new MatchFirstArray([
+            {
+              type: 'VariableDeclaration',
+              kind: /^const|var$/,
+              declarations: [
+                {
+                  type: 'VariableDeclarator',
+                  id: {
+                    type: 'Identifier'
+                  },
+                  init: {
+                    type: 'ObjectExpression',
+                    properties: new MatchFirstArray([
+                      {
+                        type: 'Property',
+                        method: false,
+                        shorthand: false,
+                        computed: false,
+                        key: {
+                          type: 'Identifier',
+                          name: /^production|prod$/
+                        },
+                        value: {
+                          type: 'UnaryExpression',
+                          operator: '!',
+                          prefix: true,
+                          argument: {
+                            type: 'Literal',
+                            // value: 0,
+                            raw: /^0|1$/
+                          }
+                        },
+                        kind: 'init'
+                      }
+                    ])
+                  }
+                }
+              ]
+            }
+          ])
+        }
       },
       0, // 258527
       1
@@ -97,7 +118,7 @@ export class AngularV9 extends Angular {
     if (found.length > 0) {
       const match = found[0] as any;
 
-      return this.convert(match.declarations[0].init.properties);
+      return this.convert(match.body.body[0].declarations[0].init.properties);
     }
 
     return [];

@@ -1,5 +1,14 @@
 # Change Log
 
+## 1.0.0-beta.1
+
+### Changes
+
+- Updated environment selection rules
+- Added version number to help
+- Added support for gzip encoding
+- Updated support of pipe usage
+
 ## 1.0.0-beta.0
 
 ### Changes
