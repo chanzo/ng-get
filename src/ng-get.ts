@@ -1,31 +1,26 @@
 import { Parser } from 'htmlparser2';
-import * as http from 'https';
+import { wget } from './common';
+import { acornSelect, MatchArray, MatchFirstArray } from './parsers/acorn-tools';
+import * as fs from 'fs';
+import * as acorn from 'acorn';
+import * as walk from 'acorn-walk';
+import { AngularV9 } from './parsers/angular-v9';
 
-async function wget(url: string): Promise<Buffer> {
-  const options = url;
-
-  return new Promise((resolve, reject) => {
-    http.get(options, message => {
-      const bodyChunks: Buffer[] = [];
-
-      message
-        .on('data', (chunk: Buffer) => {
-          bodyChunks.push(chunk);
-        })
-        .on('end', () => {
-          resolve(Buffer.concat(bodyChunks));
-        });
-    });
-  });
+interface IIndex {
+  readonly scripts: string[];
+  readonly main: string;
 }
 
 class NGInspect {
-  public static async getScripts(uri: string): Promise<string[]> {
+  public readonly ngVersion: string;
+  public environment: any;
+  public static async parseIndex(uri: string): Promise<IIndex> {
     const content = await wget(uri);
     const scripts: string[] = [];
     const parser = new Parser({
       onopentag: (name, attributes) => {
-        if (name === 'script' && (attributes.type === 'module' || (attributes.nomodule === '' && attributes.defer === ''))) {
+        // if (name === 'script' && (attributes.type === 'module' || (attributes.nomodule === '' && attributes.defer === ''))) {
+        if (name === 'script' && attributes.src) {
           scripts.push(attributes.src);
         }
       },
@@ -36,31 +31,34 @@ class NGInspect {
     parser.write(content.toString());
     parser.end();
 
-    return scripts;
-  }
+    const index = scripts.findIndex(value => value.startsWith('main'));
 
-  public static async getEnvironment(uri: string): Promise<void> {
-    const content = await wget(uri);
-    const scripts: string[] = [];
-    const parser = new Parser({
-      onopentag: (name, attributes) => {
-        console.log(name);
-      },
-      ontext: text => {},
-      onclosetag: tagname => {}
-    });
-
-    parser.write(content.toString());
-    parser.end();
+    return {
+      scripts: scripts,
+      main: index !== -1 ? scripts[index] : ''
+    };
   }
 
   public static async parse(uri: string): Promise<NGInspect> {
-    const script = await NGInspect.getScripts(uri);
-    const ngi = new NGInspect(script);
+    const index = await NGInspect.parseIndex(uri);
+    const main = index.main ? (await wget(uri + '/' + index.main)).toString() : '';
+    // const main = fs.readFileSync('../main-dump-min.js').toString();
+    const ngi = new NGInspect(index, main);
 
     return ngi;
   }
-  private constructor(public readonly scripts: string[]) {}
+
+  private constructor(public readonly index: IIndex, main: string) {
+    const node = acorn.parse(main, { ecmaVersion: 2020 });
+
+    // fs.writeFileSync('acorn.json', JSON.stringify(node, null, 2));
+    // fs.writeFileSync('../main-dump-min.js');
+
+    const parser = new AngularV9(node);
+
+    this.ngVersion = parser.getVersion();
+    this.environment = parser.getEnvironment();
+  }
 }
 
 export async function main(argv: string[]): Promise<void> {
@@ -72,8 +70,9 @@ export async function main(argv: string[]): Promise<void> {
   const url = argv[2];
 
   console.log('Inspecting:', url);
+  console.log();
 
   const result = await NGInspect.parse(url);
 
-  console.log(result.scripts);
+  console.log(JSON.stringify(result, null, 2));
 }

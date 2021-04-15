@@ -1,5 +1,13 @@
 # Change Log
 
+## 0.0.0-alpha.2
+
+### Changes
+
+- Added `acorn`
+- Added `acorn-walk`
+- Updated `README.md`
+
 ## 0.0.0-alpha.1
 
 ### Changes
