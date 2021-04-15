@@ -42,7 +42,7 @@ export class MatchArray {
 }
 
 export class MatchFirstArray {
-  public constructor(public readonly items: Array<{ [name: string]: any }>, public readonly min: number = 0, public readonly max: number = Number.MAX_SAFE_INTEGER) {}
+  public constructor(public readonly items: Array<{ [name: string]: any }>, public readonly min: number = 1, public readonly max: number = Number.MAX_SAFE_INTEGER) {}
 }
 
 export interface ISelection {
@@ -52,6 +52,10 @@ export interface ISelection {
 export function nodeMatch(node: any, match: any): boolean {
   if (!node && node !== match) {
     return false;
+  }
+
+  if (!match) {
+    return match === node;
   }
 
   if (Array.isArray(match)) {

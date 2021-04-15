@@ -1,10 +1,9 @@
 import { Parser } from 'htmlparser2';
 import { wget } from './common';
-import { acornSelect, MatchArray, MatchFirstArray } from './parsers/acorn-tools';
 import * as fs from 'fs';
 import * as acorn from 'acorn';
-import * as walk from 'acorn-walk';
 import { AngularV9 } from './parsers/angular-v9';
+import { version } from './package.json';
 
 interface IIndex {
   readonly scripts: string[];
@@ -61,6 +60,7 @@ class NGInspect {
       this.ngVersion = parser.getVersion();
       this.environment = parser.getEnvironment();
     } catch (error) {
+      console.error(error);
       this.ngVersion = '';
       this.environment = {};
     }
@@ -69,11 +69,11 @@ class NGInspect {
   private static async getMain(url: URL, main: string): Promise<string> {
     if (main) {
       try {
-        console.log('Downloading main:', url.href + main);
+        console.error('Downloading main:', url.href + main);
 
         return (await wget(url.href + main)).toString();
       } catch (error) {
-        console.log(error);
+        console.error(error);
       }
     }
 
@@ -83,6 +83,8 @@ class NGInspect {
 
 export async function main(argv: string[]): Promise<void> {
   if (argv.length < 3) {
+    console.log('NG-Get ' + version);
+    console.log();
     console.log('Usage: npx ng-get https://my-angular-website.com');
     process.exit(1);
   }
@@ -95,8 +97,8 @@ export async function main(argv: string[]): Promise<void> {
 
   const url = new URL(location);
 
-  console.log('Inspecting:', url.href);
-  console.log();
+  console.error('Inspecting:', url.href);
+  console.error();
 
   const result = await NGInspect.parse(url);
 
