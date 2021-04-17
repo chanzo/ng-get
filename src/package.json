@@ -1,12 +1,14 @@
 {
   "name": "ng-get",
-  "version": "1.0.0-beta.1",
+  "version": "1.0.0-beta.2",
   "description": "Get the environment files of a publish Angular app.",
   "main": "ng-get.js",
   "keywords": [
-    "shell",
     "environment",
-    "cli"
+    "cli",
+    "inspect",
+    "angular",
+    "debug"
   ],
   "bin": {
     "ng-get": "bin/ng-get.js"

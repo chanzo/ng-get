@@ -17,22 +17,20 @@
 [david-dm-dev-image]: https://img.shields.io/david/dev/chanzo/ng-get.svg
 [license-image]: https://img.shields.io/npm/l/ng-get.svg
 
-Get the environment files of a publish Angular app.
+Get the environment content of a publish Angular app.
 
-This version is still really experimental but it should work for the Angular versions v9, v10 and v11
+This version is still experimental but it should at least work for the Angular versions v7, v9, v10 and v11
 
-### Example command
+### Example usage
 
 ```bash
 npx ng-get https://my-angular-website.com
 ```
 
-<details>
-  <summary><strong>Output:</strong></summary>
-
 ```text
 Inspecting: https://my-angular-website.com
 
+Downloading main: https://my-angular-website.com/main-es2015.1021e34d6643056b5e3b.js
 {
   "index": {
     "scripts": [
@@ -65,5 +63,4 @@ Inspecting: https://my-angular-website.com
 }
 ```
 
-</details>
 &nbsp;
