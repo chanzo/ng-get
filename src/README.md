@@ -19,12 +19,13 @@
 
 Get the environment content of a publish Angular app.
 
-This version is still experimental but it should at least work for the Angular versions v7, v9, v10 and v11
+Tested for Angular versions v7, v8, v9, v10, v11 and v12
 
 ### Example usage
 
 ```bash
 npx ng-get https://my-angular-website.com
+npx ng-get main-es2015.1021e34d6643056b5e3b.js
 ```
 
 ```text

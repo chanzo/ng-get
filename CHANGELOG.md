@@ -1,5 +1,12 @@
 # Change Log
 
+## 1.0.0
+
+### Changes
+
+- Updated `README.md`
+- Added support for Angular 12
+
 ## 1.0.0-beta.2
 
 ### Changes

@@ -2,6 +2,7 @@ node_modules
 dist
 .vscode
 launcher-custom.json
-main-dump-min.js
-main-dump.js
+main-dump-min.js*
+main-dump.js*
 acorn.json
+test-sites.md
