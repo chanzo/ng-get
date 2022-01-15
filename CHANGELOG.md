@@ -6,6 +6,7 @@
 
 - Updated `README.md`
 - Added support for Angular 12
+- Updated dependencies and dev dependencies
 
 ## 1.0.0-beta.2
 

@@ -2,7 +2,7 @@ import { acornSelect, MatchFirstArray } from './acorn-tools';
 import { Angular } from './angular-main';
 
 export class AngularGeneric extends Angular {
-  public get name() {
+  public get name(): string {
     return 'AngularGeneric';
   }
 

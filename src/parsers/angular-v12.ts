@@ -1,8 +1,8 @@
-import { acornSelect, MatchFirstArray,MatchArray } from './acorn-tools';
+import { acornSelect, MatchArray, MatchFirstArray } from './acorn-tools';
 import { AngularGeneric } from './angular-v9';
 
 export class AngularV12 extends AngularGeneric {
-  public get name() {
+  public get name(): string {
     return 'AngularV12';
   }
 

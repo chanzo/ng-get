@@ -1,6 +1,6 @@
 {
   "name": "ng-get",
-  "version": "1.0.0-beta.2",
+  "version": "1.0.0",
   "description": "Get the environment files of a publish Angular app.",
   "main": "ng-get.js",
   "keywords": [
@@ -20,8 +20,8 @@
   "author": "Chanzo Wazi",
   "license": "MIT",
   "dependencies": {
-    "acorn": "^8.1.1",
-    "acorn-walk": "^8.0.2",
-    "htmlparser2": "^6.1.0"
+    "acorn": "^8.7.0",
+    "acorn-walk": "^8.2.0",
+    "htmlparser2": "^7.2.0"
   }
 }
