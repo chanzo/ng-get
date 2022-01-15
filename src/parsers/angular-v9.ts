@@ -1,8 +1,12 @@
-import { acornSelect, MatchArray, MatchFirstArray } from './acorn-tools';
+import { acornSelect, MatchFirstArray } from './acorn-tools';
 import { Angular } from './angular-main';
 
-export class AngularV9 extends Angular {
-  public constructor(private readonly node: acorn.Node) {
+export class AngularGeneric extends Angular {
+  public get name(): string {
+    return 'AngularGeneric';
+  }
+
+  public constructor(protected readonly node: acorn.Node) {
     super();
   }
 
@@ -51,7 +55,7 @@ export class AngularV9 extends Angular {
       this.node,
 
       {
-        type: 'FunctionExpression',
+        type: /^ArrowFunctionExpression|FunctionExpression$/,
         id: null,
         expression: false,
         generator: false,
@@ -128,16 +132,16 @@ export class AngularV9 extends Angular {
     const result: { [name: string]: string | object } = {};
 
     for (const item of items) {
-      if (item.value.argument) {
+      if (item.value.argument !== undefined) {
         result[item.key.name] = item.value.argument.value;
         continue;
       }
-      if (item.value.value) {
+      if (item.value.value !== undefined) {
         result[item.key.name] = item.value.value;
         continue;
       }
 
-      if (item.value.properties) {
+      if (item.value.properties !== undefined) {
         result[item.key.name] = this.convert(item.value.properties);
         continue;
       }
